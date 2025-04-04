@@ -12,7 +12,7 @@ No need to use pip :^D
 
 If python is set in your system's enviorement variables, you can follow the next structure to run the program from your terminal
 
-"{variable name} {path of the file: Expense-Tracker.py} {function to use} {args}"
+```{variable name} {path of the file: Expense-Tracker.py} {function to use} {args} ```bash
 
 Example:
 python Expense-Tracker.py add --description "Lunch" --amount 15.0
@@ -20,11 +20,11 @@ python Expense-Tracker.py add --description "Lunch" --amount 15.0
 If Python is not in your environment variables, use the full path to the Python executable.
 
 Example in Windows:
-C:\Path\To\Python\python.exe {path_of_the_file: Expense-Tracker.py} {function_to_use} {arguments}
+```C:\Path\To\Python\python.exe {path_of_the_file: Expense-Tracker.py} {function_to_use} {arguments}```bash
 
 You can also use the -h flag for more help:
 
-python Expense-Tracker.py -h
+```python Expense-Tracker.py -h```bash
 
 This will provide a list of available functions and options.
 
@@ -39,22 +39,22 @@ No hay necesidad de usar pip :^D
 
 Si Python está en las variables de entorno de tu sistema, puedes usar la siguiente estrucutra para ejecutar el programa desde la terminal:
 
-python {ubicación_del_archivo: Expense-Tracker.py} {función_a_usar} {argumentos}
+```python {ubicación_del_archivo: Expense-Tracker.py} {función_a_usar} {argumentos}```bash
 
 Ejemplo:
 
-python Expense-Tracker.py add --description "Lunch" --amount 15.0
+```python Expense-Tracker.py add --description "Lunch" --amount 15.0```bash
 
 
 Si Python no está configurado en las variables de entorno, usa la ruta completa al ejecutable de Python.
 
 Ejemplo en Windows:
 
-    C:\Ruta\A\Python\python.exe {ubicación_del_archivo: Expense-Tracker.py} {función_a_usar} {argumentos}
+```C:\Ruta\A\Python\python.exe {ubicación_del_archivo: Expense-Tracker.py} {función_a_usar} {argumentos}```bash
 
 Para obtener más ayuda sobre las funciones disponibles, puedes usar la opción -h:
 
-    python Expense-Tracker.py -h
+```python Expense-Tracker.py -h```bash
 
 Esto te dará una lista de las opciones y cómo usarlas.
 
