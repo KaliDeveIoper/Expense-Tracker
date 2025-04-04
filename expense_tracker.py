@@ -46,6 +46,10 @@ def add_expense(args):
     id=get_new_id(data)
     current_date=datetime.date.today()
     
+    if args.amount<0:
+        print("The amount cannot be negative")
+
+        return
     try:
         new_expense_data={
                     "id":id,
