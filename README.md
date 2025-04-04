@@ -15,11 +15,13 @@ If python is set in your system's enviorement variables, you can follow the next
 ```{variable name} {path of the file: Expense-Tracker.py} {function to use} {args}```
 
 Example:
+
 ```python Expense-Tracker.py add --description "Lunch" --amount 15.0```
 
 If Python is not in your environment variables, use the full path to the Python executable.
 
 Example in Windows:
+
 ```C:\Path\To\Python\python.exe {path_of_the_file: Expense-Tracker.py} {function_to_use} {arguments}```
 
 You can also use the -h flag for more help:

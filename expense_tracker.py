@@ -3,7 +3,7 @@ import json
 import datetime
 
 
-def cargarJson() -> list:
+def cargar_json() -> list:
 
     try:
         with open("expenses.json", "r") as archivo:
@@ -13,30 +13,28 @@ def cargarJson() -> list:
         with open("expenses.json", "w") as archivo:
             json.dump(data, archivo, indent=4)
     except json.JSONDecodeError:
-        print("⚠️ El archivo 'expenses.json' existe pero no tiene un formato JSON válido. Reiniciando...")
+        print("El archivo 'expenses.json' existe pero no tiene un formato JSON válido. Reiniciando...")
         data = []
         with open("expenses.json", "w") as archivo:
             json.dump(data, archivo, indent=4)
 
     return data
 
-def getItemIndexById(id:int,data)->int| None:
+def get_item_index_by_id(id:int,data)->int| None:
 
     for index,item in enumerate(data):
-            if item["id"]==id:
-                return index
+        if item["id"]==id:
+            return index
     return None
- 
 
-def guardarJson(data):
+def guardar_json(data):
     try:
         with open("expenses.json", "w") as archivo:
-            json.dump(data, archivo, indent=4)
-        
+            json.dump(data, archivo, indent=4)       
     except Exception as e:
-        print(f"Ocurrio un error al guardar la informacion",e)
+        print("Ocurrio un error al guardar la informacion",e)
 
-def getNewId(data):
+def get_new_id(data):
     if not data:
         return 1
     max_id = max(item["id"] for item in data)
@@ -44,38 +42,33 @@ def getNewId(data):
 
 
 def add_expense(args):
-    data=cargarJson()
-    id=getNewId(data)
-    currentDate=datetime.date.today()
+    data=cargar_json()
+    id=get_new_id(data)
+    current_date=datetime.date.today()
     
     try:
         new_expense_data={
                     "id":id,
-                    "amount":f"args.amount",
+                    "amount":args.amount,
                     "description":args.description,
-                    "date":f"{currentDate.year}-{currentDate.month}-{currentDate.day}",
-                    "year":currentDate.year,
-                    "month":currentDate.month,
-                    "day":currentDate.day
+                    "date":f"{current_date.year}-{current_date.month}-{current_date.day}",
+                    "year":current_date.year,
+                    "month":current_date.month,
+                    "day":current_date.day
                     
                     }
     
         data.append(new_expense_data)
-        guardarJson(data)
+        guardar_json(data)
         print(f"Expense added successfully (ID: {id})")
 
     except Exception as e:
         print("An unexpected error has occurred",e )
-
-    
-    
-    
-
 def update_expense(args):
-    data=cargarJson()
+    data=cargar_json()
     
-    itemIndex=getItemIndexById(args.id,data)
-    item=data[itemIndex]
+    item_index=get_item_index_by_id(args.id,data)
+    item=data[item_index]
     if item:
         if args.amount is not None:
             item["amount"]=args.amount
@@ -83,9 +76,9 @@ def update_expense(args):
         if args.description is not None:
             item["description"]=args.description
 
-        data[itemIndex]=item
+        data[item_index]=item
 
-        guardarJson(data)
+        guardar_json(data)
         print(f"The expense with id: {args.id} was successfully updated")
     
     else:
@@ -94,15 +87,15 @@ def update_expense(args):
 
 def delete_expense(args):
 
-    data=cargarJson()
+    data=cargar_json()
 
     if args.id:
-        itemIndex=getItemIndexById(args.id,data)
+        item_index=get_item_index_by_id(args.id,data)
         
-        if itemIndex is not None:
-            data.pop(itemIndex)
+        if item_index is not None:
+            data.pop(item_index)
 
-            guardarJson(data)
+            guardar_json(data)
 
             print(f"The expense with ID {args.id} was successfully deleted, I won't miss him")
         else:
@@ -116,64 +109,64 @@ def delete_expense(args):
             second = input("This action CANNOT be undone. Type 'DELETE ALL' to confirm:")
             if second == 'DELETE ALL':
                 data.clear()  
-                guardarJson(data)
+                guardar_json(data)
                 print("All expenses have been deleted successfully. I hope you're proud")
             else:
                 print("Nice try, Whiskers. You're not deleting anything today🐾.")
         else:
             print("No expenses were deleted, I would swear they were shaking.")
 
-def imprimirFila(fila:list):
+def print_row(fila:list):
     cadena="# "
     for element in fila:
         cadena+=str(element)
     print(cadena)
 
-def view_expense(args):
-    data=cargarJson()
+def view_expense():
+    data=cargar_json()
     if not data:
         print("❌ No hay gastos registrados.")
         return
     fila=[]
 
-    keys2Print=("id","date","description", "amount")
-    for key in keys2Print:
+    keys_to_print=("id","date","description", "amount")
+    for key in keys_to_print:
         key=str(key).upper()
         printkey=key.ljust(15)
         fila.append(printkey)
 
-    imprimirFila(fila)
+    print_row(fila)
 
 
     for item in data:
         fila=[]
-        for key in keys2Print:
+        for key in keys_to_print:
             value = item.get(key, 'N/A')
             if key=="amount":
                 value=f"${value:.2f}"
             fila.append(str(value).ljust(15))
         
-        imprimirFila(fila)
+        print_row(fila)
             
     
 
 def summary(args):
 
     months=("January","February","March","April","May","June","July","August","September","October","November","December")
-    currentYear=datetime.date.today().year
+    current_year=datetime.date.today().year
     month=args.month
-    data=cargarJson()
+    data=cargar_json()
     total=0
 
     if month is not None:
-        if not (1<=month<=12):
+        if not 1<=month<=12:
             print("Invalid month. Please provide a number between 1 and 12.")
             return
         for item in data:
-            if item['month']==month and item["year"] ==currentYear:
+            if item['month']==month and item["year"] ==current_year:
                 total+=item['amount']
 
-        print(f"Total expenses for {months[month-1]} {currentYear}: ${total:.2f}")
+        print(f"Total expenses for {months[month-1]} {current_year}: ${total:.2f}")
     
     else:
        
